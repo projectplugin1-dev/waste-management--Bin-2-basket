@@ -41,6 +41,50 @@ Server: http://localhost:3000
 User site: http://localhost:3000/
 Admin site: http://localhost:3000/admin/
 
+Preview
+Windows
+- Install MySQL (Workbench or WAMP/XAMPP). Start the MySQL service.
+- Create .env: PowerShell
+```
+Copy-Item .env.example .env
+```
+- If using WAMP/XAMPP (root has no password), set in .env:
+```
+DB_USER=root
+DB_PASSWORD=
+```
+- If you set a custom root password during MySQL install, put it in `.env`.
+- Run the app:
+```
+npm install
+npm start
+```
+- Open: User http://localhost:3000/ • Admin http://localhost:3000/admin/
+- Admin login: admin@bin2basket.com / Admin@123
+
+macOS/Linux
+- Ensure MySQL is running (brew services or systemctl).
+- Copy env and run:
+```
+cp .env.example .env
+npm install
+npm start
+```
+- Open: User http://localhost:3000/ • Admin http://localhost:3000/admin/
+
+Docker (optional)
+```
+docker compose up -d mysql adminer
+npm start
+```
+Adminer: http://localhost:8080
+
+Troubleshooting
+- ER_ACCESS_DENIED_ERROR: Your MySQL creds in `.env` don’t match. Fix DB_USER/DB_PASSWORD. Test: `mysql -u root -p -h 127.0.0.1 -P 3306`.
+- Duplicate keys in .env: Ensure only one set of DB_* and other keys (remove duplicates).
+- Port already in use: Change `PORT` in `.env` (e.g., 3001) and restart.
+- Can’t connect to MySQL: Use `DB_HOST=127.0.0.1` (not `localhost`), verify service is running, verify `DB_PORT=3306`.
+
 Notes
 - On first run, DB schema and sample products are created automatically, and an admin account is seeded using `ADMIN_EMAIL`/`ADMIN_PASSWORD`.
 - Max discount per order is 20% of subtotal; points redeem convert 1 point = 1 currency unit toward the cap.
