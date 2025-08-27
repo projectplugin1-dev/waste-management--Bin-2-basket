@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Groceries - Bin 2 Basket</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <script defer src="/js/common.js"></script>
+  <script defer src="/js/chatbot.js"></script>
+  <script defer src="/js/shop.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container row between center">
+      <div class="row center">
+        <img src="/logo.png" class="logo" alt="logo"/>
+        <strong>Bin 2 Basket</strong>
+      </div>
+      <nav class="row gap">
+        <a href="/account.html">My Account</a>
+        <a href="/login.html">Login</a>
+        <a href="/register.html">Register</a>
+        <a href="/">Home</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <div class="row between center">
+      <h2>Groceries</h2>
+      <div class="muted">Points balance: <strong id="points">-</strong></div>
+    </div>
+    <div id="products" class="grid"></div>
+    <h3>Cart</h3>
+    <div class="card">
+      <div id="cart-items" class="grid"></div>
+      <div class="row between center" style="margin-top:10px">
+        <div class="muted">Subtotal: <strong id="subtotal">$0.00</strong></div>
+        <div style="display:flex; gap:8px; align-items:center">
+          <input id="pointsRedeem" type="number" min="0" value="0" style="width:120px" />
+          <button id="checkoutBtn">Checkout</button>
+        </div>
+      </div>
+      <div id="cart-msg" class="muted" style="margin-top:6px"></div>
+    </div>
+  </main>
+  <div id="chatbot-root"></div>
+</body>
+</html>
+
