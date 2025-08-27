@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register - Bin 2 Basket</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <script defer src="/js/common.js"></script>
+  <script defer src="/js/chatbot.js"></script>
+  <script defer src="/js/register.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container row between center">
+      <div class="row center">
+        <img src="/logo.png" class="logo" alt="logo"/>
+        <strong>Bin 2 Basket</strong>
+      </div>
+      <nav class="row gap">
+        <a href="/login.html">Login</a>
+        <a href="/shop.html">Groceries</a>
+        <a href="/">Home</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container" style="max-width:560px">
+    <h2>Create your account</h2>
+    <div class="card">
+      <form id="reg-form">
+        <div style="display:grid; gap:12px">
+          <div>
+            <label for="name">Full Name</label>
+            <input id="name" required />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" type="email" required />
+          </div>
+          <div>
+            <label for="phone">Phone (optional)</label>
+            <input id="phone" />
+          </div>
+          <div>
+            <label for="password">Password</label>
+            <input id="password" type="password" required minlength="6" />
+          </div>
+          <button type="submit">Create Account</button>
+          <div class="muted">Already have an account? <a class="link" href="/login.html">Login</a></div>
+          <div id="reg-msg" class="muted"></div>
+        </div>
+      </form>
+    </div>
+  </main>
+  <div id="chatbot-root"></div>
+</body>
+</html>
+

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Account - Bin 2 Basket</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <script defer src="/js/common.js"></script>
+  <script defer src="/js/chatbot.js"></script>
+  <script defer src="/js/account.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container row between center">
+      <div class="row center">
+        <img src="/logo.png" class="logo" alt="logo"/>
+        <strong>Bin 2 Basket</strong>
+      </div>
+      <nav class="row gap">
+        <a href="/shop.html">Groceries</a>
+        <a href="#" id="logoutBtn">Logout</a>
+        <a href="/">Home</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <h2>My Account</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Profile</h3>
+        <div id="profile"></div>
+      </div>
+      <div class="card">
+        <h3>Points Balance</h3>
+        <div id="points" class="price">-</div>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top:20px">
+      <div class="card">
+        <h3>Waste Submissions</h3>
+        <table class="table" id="waste-table"></table>
+      </div>
+      <div class="card">
+        <h3>Points Ledger</h3>
+        <table class="table" id="ledger-table"></table>
+      </div>
+      <div class="card" style="grid-column: 1 / -1;">
+        <h3>Orders</h3>
+        <table class="table" id="orders-table"></table>
+      </div>
+    </div>
+  </main>
+  <div id="chatbot-root"></div>
+</body>
+</html>
+

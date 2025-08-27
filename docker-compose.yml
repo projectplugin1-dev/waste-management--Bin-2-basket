@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: b2b-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: bin2basket
+    ports:
+      - "3306:3306"
+    volumes:
+      - b2b-mysql-data:/var/lib/mysql
+    command: ["mysqld", "--default-authentication-plugin=mysql_native_password"]
+
+  adminer:
+    image: adminer:latest
+    container_name: b2b-adminer
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - ADMINER_DEFAULT_SERVER=mysql
+    depends_on:
+      - mysql
+
+volumes:
+  b2b-mysql-data:
+    driver: local

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - Bin 2 Basket</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <script defer src="/js/common.js"></script>
+  <script defer src="/admin/js/admin.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container row between center">
+      <div class="row center">
+        <img src="/logo.png" class="logo" alt="logo"/>
+        <strong>Bin 2 Basket Admin</strong>
+      </div>
+      <nav class="row gap">
+        <a href="#" id="logoutBtn">Logout</a>
+        <a href="/">User Site</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="auth-card" class="card" style="max-width:560px">
+      <h2>Admin Login</h2>
+      <div style="display:grid; gap:12px">
+        <input id="email" type="email" placeholder="Email" value="admin@bin2basket.com"/>
+        <input id="password" type="password" placeholder="Password" value="Admin@123"/>
+        <button id="loginBtn">Login</button>
+        <div id="auth-msg" class="muted"></div>
+      </div>
+    </section>
+
+    <section id="dashboard" style="display:none">
+      <div class="grid">
+        <div class="card">
+          <h3>Users</h3>
+          <div class="row gap">
+            <input id="userSearch" placeholder="Search name/email/User ID" />
+            <button id="userSearchBtn">Search</button>
+          </div>
+          <table class="table" id="users-table"></table>
+        </div>
+
+        <div class="card">
+          <h3>Record Waste Submission</h3>
+          <div style="display:grid; gap:10px">
+            <input id="ws_user_uid" placeholder="User ID (e.g., B2B-XXXX)" />
+            <select id="ws_type">
+              <option value="plastic">Plastic</option>
+              <option value="metal">Metal</option>
+              <option value="paper">Paper</option>
+              <option value="glass">Glass</option>
+              <option value="e-waste">E-Waste</option>
+              <option value="organic">Organic</option>
+              <option value="other">Other</option>
+            </select>
+            <input id="ws_weight" type="number" step="0.01" placeholder="Weight (kg)" />
+            <button id="ws_submit">Record</button>
+            <div id="ws_msg" class="muted"></div>
+          </div>
+        </div>
+
+        <div class="card" style="grid-column:1/-1">
+          <h3>Orders</h3>
+          <div class="row gap">
+            <select id="orderFilter">
+              <option value="">All</option>
+              <option value="PENDING">Pending</option>
+              <option value="ACCEPTED">Accepted</option>
+              <option value="DECLINED">Declined</option>
+            </select>
+            <button id="reloadOrders">Reload</button>
+          </div>
+          <table class="table" id="orders-table"></table>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
+

@@ -1,0 +1,95 @@
+-- Schema for Bin 2 Basket (MySQL)
+
+CREATE DATABASE IF NOT EXISTS `bin2basket` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `bin2basket`;
+
+CREATE TABLE IF NOT EXISTS users (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  user_uid VARCHAR(20) NOT NULL UNIQUE,
+  name VARCHAR(120) NOT NULL,
+  email VARCHAR(160) NOT NULL UNIQUE,
+  phone VARCHAR(30) NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  role ENUM('user','admin') NOT NULL DEFAULT 'user',
+  points_balance INT NOT NULL DEFAULT 0,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS waste_submissions (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  user_id BIGINT UNSIGNED NOT NULL,
+  user_uid VARCHAR(20) NOT NULL,
+  waste_type ENUM('plastic','metal','paper','glass','e-waste','organic','other') NOT NULL,
+  weight_kg DECIMAL(10,2) NOT NULL,
+  points_awarded INT NOT NULL,
+  submitted_by_admin_id BIGINT UNSIGNED NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  INDEX (user_id),
+  CONSTRAINT fk_ws_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS points_ledger (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  user_id BIGINT UNSIGNED NOT NULL,
+  change_amount INT NOT NULL,
+  reason ENUM('waste_submission','order_redeem','order_refund','manual_adjustment') NOT NULL,
+  reference_id BIGINT UNSIGNED NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  INDEX (user_id),
+  CONSTRAINT fk_pl_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS products (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(160) NOT NULL,
+  description TEXT NULL,
+  price DECIMAL(10,2) NOT NULL,
+  image_url VARCHAR(500) NULL,
+  stock INT NOT NULL DEFAULT 100,
+  is_active TINYINT NOT NULL DEFAULT 1,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  user_id BIGINT UNSIGNED NOT NULL,
+  status ENUM('PENDING','ACCEPTED','DECLINED','CANCELLED','FULFILLED') NOT NULL DEFAULT 'PENDING',
+  subtotal DECIMAL(10,2) NOT NULL,
+  discount_value DECIMAL(10,2) NOT NULL DEFAULT 0,
+  points_redeemed INT NOT NULL DEFAULT 0,
+  total DECIMAL(10,2) NOT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  INDEX (user_id),
+  CONSTRAINT fk_orders_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS order_items (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  order_id BIGINT UNSIGNED NOT NULL,
+  product_id BIGINT UNSIGNED NOT NULL,
+  quantity INT NOT NULL,
+  unit_price DECIMAL(10,2) NOT NULL,
+  line_total DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (id),
+  INDEX (order_id),
+  INDEX (product_id),
+  CONSTRAINT fk_oi_order FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+  CONSTRAINT fk_oi_product FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE RESTRICT
+);
+
+CREATE TABLE IF NOT EXISTS admin_actions (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  admin_id BIGINT UNSIGNED NOT NULL,
+  order_id BIGINT UNSIGNED NOT NULL,
+  action ENUM('ACCEPT','DECLINE') NOT NULL,
+  reason VARCHAR(255) NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  INDEX (admin_id),
+  INDEX (order_id)
+);
